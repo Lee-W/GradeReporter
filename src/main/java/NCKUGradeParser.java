@@ -16,6 +16,7 @@ public class NCKUGradeParser implements GradeParser {
     private Response loggedInResponse;
 
     private ArrayList<String> availableSemesters = new ArrayList<String>();
+    private JSONObject rawData;
     private JSONObject overallSummary = new JSONObject();
     private JSONObject allSemesters = new JSONObject();
 
@@ -33,10 +34,20 @@ public class NCKUGradeParser implements GradeParser {
         parseOverallSummary(document);
         parseAllSemesters();
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("courses", allSemesters);
-        jsonObject.put("summary", overallSummary);
-        return jsonObject;
+        rawData = new JSONObject();
+        rawData.put("courses", allSemesters);
+        rawData.put("summary", overallSummary);
+        return rawData;
+    }
+
+    @Override
+    public JSONObject getSemesterData() {
+        return allSemesters;
+    }
+
+    @Override
+    public JSONObject getRawData() {
+        return rawData;
     }
 
     private void parseAvailableSemesters(Document document) {
