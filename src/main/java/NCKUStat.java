@@ -1,8 +1,6 @@
-import org.apache.commons.math3.exception.ZeroException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.swing.text.Document;
 import java.util.ArrayList;
 import java.util.Iterator;
 
