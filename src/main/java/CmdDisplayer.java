@@ -1,27 +1,12 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.util.Iterator;
 import java.util.Scanner;
 
 public class CmdDisplayer {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String studentID, password;
-
-        System.out.print("Enter you student ID: ");
-        studentID = scanner.nextLine();
-
-        System.out.print("Enter your secret password: ");
-        password = scanner.nextLine();
-
-        GradeReporter nckuGradeReporter = new GradeReporter(
-                "ncku", studentID, password
-        );
-        JSONObject data = nckuGradeReporter.parseGradeData();
-        JSONObject semesterData = (JSONObject) data.get("courses");
-        JSONObject summary = (JSONObject) data.get("summary");
-
+    public static void displaySemesterData(JSONObject semesterData) {
         Iterator<String> semesters = semesterData.keys();
         while(semesters.hasNext()) {
             String semester = semesters.next();
@@ -47,15 +32,51 @@ public class CmdDisplayer {
             System.out.println();
         }
 
-        for (Object obj: summary.keySet()) {
+    }
+
+    public static void displaySummaryData(JSONObject summaryData) {
+        for (Object obj: summaryData.keySet()) {
             System.out.print(obj+"\t\t");
         }
         System.out.println();
 
-        Iterator<String> summaryTitles = summary.keys();
+        Iterator<String> summaryTitles = summaryData.keys();
         while (summaryTitles.hasNext()) {
             String key = summaryTitles.next();
-            System.out.print(summary.get(key)+"\t\t");
+            System.out.print(summaryData.get(key)+"\t\t");
         }
+
+    }
+
+    public static void main(String[] args) {
+        String studentID, password;
+
+        Console console = System.console();
+        if (console != null) {
+            studentID = console.readLine("Enter your student ID: ");
+            password = new String(console.readPassword("Enter your password: "));
+        } else {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Enter your student ID: ");
+            studentID = scanner.nextLine();
+
+            System.out.print("Enter your password (Note that it will not be concealed): ");
+            password = scanner.nextLine();
+        }
+
+
+
+        GradeReporter nckuGradeReporter = new GradeReporter(
+                "ncku", studentID, password
+        );
+        JSONObject data = nckuGradeReporter.parseGradeData();
+        JSONObject semesterData = (JSONObject) data.get("courses");
+        JSONObject summary = (JSONObject) data.get("summary");
+
+        displaySemesterData(semesterData);
+        displaySummaryData(summary);
+
+
     }
 }
