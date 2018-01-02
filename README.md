@@ -33,10 +33,12 @@ Note that if you execute it from IDEs (e.g., eclipse or IntelliJ), your password
 ## Class Diagram
 
 ### Without Relations
-![](./img/Class Diagram.png)
+
+![Class Diagram](./img/Class-Diagram.png)
 
 ### With Relations
-![](./img/Class Diagram (with Relations).png)
+
+![Class Diagram (with Relations)](./img/Class-Diagram-with-Relations.png)
 
 # AUTHORS
 [Lee-W](https://github.com/Lee-W/)
